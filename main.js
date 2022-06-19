@@ -3,9 +3,37 @@ const EMPTY_HEART = '♡'
 const FULL_HEART = '♥'
 
 // Your JavaScript code goes here!
+const arrayOfLikes = Array.from(document.querySelectorAll('ul span'));
+
+arrayOfLikes.forEach( (heartButton) => {
+
+function likeFunction() {
+
+  mimicServerCall()
+  .then( () => {
+   if (heartButton.innerText === EMPTY_HEART) {
+      heartButton.innerText = FULL_HEART;
+      heartButton.className = 'like-glyph activated-heart';
+   }
+   else if (heartButton.innerText === FULL_HEART) {
+      heartButton.innerText = EMPTY_HEART;
+      heartButton.className = 'like-glyph';
+   }
+  }
+  )
+  .catch(() => {
+  document.querySelector('#modal').className = ''
+  document.querySelector('#modal').innerText = "Random server error. Try again."
+  setTimeout(() => {document.querySelector('#modal').className = 'hidden'}, 3000)
+  })
+}
 
 
+heartButton.addEventListener('click', likeFunction);
+})
 
+
+mimicServerCall()
 
 //------------------------------------------------------------------------------
 // Don't change the code below: this function mocks the server response
